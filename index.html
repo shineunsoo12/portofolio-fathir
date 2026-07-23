@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio By TIRR</title>
+    <!-- Mengambil Font Modern dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASIC VARIABLES --- */
+        :root {
+            --primary-color: #2563eb; /* Biru TKJ */
+            --secondary-color: #1e40af;
+            --accent-color: #0ea5e9;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f3f4f6;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        nav button {
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover {
+            color: var(--primary-color);
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        nav button.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        main {
+            flex: 1;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        /* Tab System Logic */
+        .tab-content {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block; /* Show active tab */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HOME TAB STYLE --- */
+        .profile-container {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-school {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .about-section h3 {
+            text-align: left;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .about-text {
+            text-align: justify;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        /* --- SKILL TAB STYLE --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-img-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .skill-img-container img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        /* Jika ada 2 gambar di satu kartu (Mikrotik) */
+        .skill-img-container.two-images img {
+            width: 48%; 
+        }
+
+        .skill-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            text-align: justify;
+        }
+
+        /* --- ACHIEVEMENT TAB STYLE --- */
+        .achievement-container {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .achievement-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* --- FOOTER & CONTACT FORM --- */
+        footer {
+            background-color: #1f2937;
+            color: var(--white);
+            padding: 3rem 1rem 1rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info h3, .contact-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: var(--white);
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #10b981;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-weight: 600;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+        /* Mobile Responsive Tweaks */
+        @media (max-width: 600px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .profile-name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigasi -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">Portofolio By TIRR</a>
+            <nav>
+                <ul>
+                    <li><button class="nav-btn active" onclick="openTab(event, 'home')">Home</button></li>
+                    <li><button class="nav-btn" onclick="openTab(event, 'skill')">Skill</button></li>
+                    <li><button class="nav-btn" onclick="openTab(event, 'achievement')">Achievement</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main>
+        
+        <!-- TAB 1: HOME -->
+        <section id="home" class="tab-content active">
+            <div class="profile-container">
+                <!-- Foto Profile -->
+                <img src="https://i.ibb.co.com/cKgHq87r/IMG-20260524-WA0031.jpg" alt="Foto Profile Mochammad Fathir Reza Fahresi" class="profile-img">
+                
+                <h1 class="profile-name">Mochammad Fathir Reza Fahresi</h1>
+                <p class="profile-school">SMK PLUS PELITA NUSANTARA | Kelas X TKJ 1</p>
+
+                <div class="about-section">
+                    <h3>About Me & Kenapa Saya Masuk TKJ</h3>
+                    <p class="about-text">
+                        Halo! Saya adalah seorang siswa SMK yang memiliki semangat tinggi dalam dunia teknologi, khususnya di bidang Teknik Komputer dan Jaringan (TKJ). Memilih jurusan TKJ bukanlah keputusan yang saya buat secara asal-asalan. 
+                    </p>
+                    <p class="about-text">
+                        Dunia saat ini bergerak sangat cepat menuju era digitalisasi di mana segala sesuatu saling terhubung melalui internet. Saya sangat tertarik untuk memahami bagaimana data dapat dikirim dari satu titik ke titik lain di seluruh dunia dalam hitungan detik, bagaimana infrastruktur jaringan dibangun agar stabil dan aman, serta bagaimana mengatasi masalah (troubleshooting) yang kompleks.
+                    </p>
+                    <p class="about-text">
+                        Di SMK PLUS PELITA NUSANTARA, saya belajar tidak hanya teori, tapi juga praktek langsung mulai dari konfigurasi router, instalasi server, hingga fiber optic. Saya melihat peluang karir yang sangat luas di bidang ini sebagai Network Engineer atau IT Specialist. TKJ memberikan saya fondasi yang kuat untuk memahami "otak" dari teknologi modern, dan itulah alasan utama saya mendalami jurusan ini dengan sungguh-sungguh.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SKILL -->
+        <section id="skill" class="tab-content">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: var(--secondary-color);">Keahlian Saya</h2>
+            
+            <div class="skills-grid">
+                <!-- Skill 1: Mikrotik -->
+                <div class="skill-card">
+                    <div class="skill-title">Mikrotik</div>
+                    <div class="skill-img-container two-images">
+                        <a href="https://ibb.co.com/WNzYmYc5" target="_blank">
+                            <img src="https://i.ibb.co.com/nq15x5Dm/IMG-20251218-WA0014-2.jpg" alt="Konfigurasi Mikrotik 1">
+                        </a>
+                        <a href="https://ibb.co.com/6fbXK6n" target="_blank">
+                            <img src="https://i.ibb.co.com/5fvKQqM/Screenshot-2026-03-31-08-46-00-911-com-miui-gallery.jpg" alt="Konfigurasi Mikrotik 2">
+                        </a>
+                    </div>
+                    <p class="skill-desc">
+                        Saya memiliki kemampuan dalam mengonfigurasi perangkat Mikrotik untuk berbagai kebutuhan jaringan. Mulai dari pengaturan dasar seperti Winbox, manajemen bandwidth (Simple Queue dan PCQ), setting hotspot voucher, hingga routing dasar. Saya memahami bagaimana mengamankan jaringan dan membagi koneksi internet secara adil untuk pengguna.
+                    </p>
+                </div>
+
+                <!-- Skill 2: Fiber Optic -->
+                <div class="skill-card">
+                    <div class="skill-title">Fiber Optic</div>
+                    <div class="skill-img-container">
+                        <a href="https://ibb.co.com/RkNdLXS6" target="_blank">
+                            <img src="https://i.ibb.co.com/ZpS7yQJg/IMG-20260606-WA0011.jpg" alt="Instalasi Fiber Optic">
+                        </a>
+                    </div>
+                    <p class="skill-desc">
+                        Teknologi Fiber Optic adalah tulang punggung internet modern. Saya belajar teknik splicing (penyambungan) kabel serat optik dengan presisi tinggi menggunakan Fusion Splicer. Selain itu, saya juga memahami cara instalasi ODP (Optical Distribution Point) dan penanganan kabel agar tidak mengalami bending loss yang berlebihan, serta pengujian sinyal menggunakan OTDR atau Power Meter.
+                    </p>
+                </div>
+
+                <!-- Skill 3: Server -->
+                <div class="skill-card">
+                    <div class="skill-title">Server</div>
+                    <div class="skill-img-container">
+                        <a href="https://ibb.co.com/S9xzcfQ" target="_blank">
+                            <img src="https://i.ibb.co.com/45fH21s/IMG-20260606-WA0014.jpg" alt="Manajemen Server">
+                        </a>
+                    </div>
+                    <p class="skill-desc">
+                        Server adalah jantung dari sebuah jaringan. Saya memiliki kompetensi dasar dalam merakit dan mengonfigurasi server fisik maupun virtual. Keahlian ini mencakup instalasi sistem operasi server (seperti Debian/Ubuntu atau Windows Server), konfigurasi web server (Apache/Nginx), DNS Server, dan DHCP Server untuk memastikan layanan jaringan berjalan lancar dan tersedia bagi klien.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: ACHIEVEMENT -->
+        <section id="achievement" class="tab-content">
+            <div class="achievement-container">
+                <h2 style="margin-bottom: 1.5rem; color: var(--secondary-color);">Pencapaian Saya</h2>
+                <p style="margin-bottom: 2rem; color: var(--text-light);">Berikut adalah bukti dedikasi saya dalam belajar:</p>
+                
+                <a href="https://ibb.co.com/39HD7y28" target="_blank">
+                    <img src="https://i.ibb.co.com/xtQpDSWc/58c05591-49e5-4aca-b489-571827077703.png" alt="Sertifikat Prestasi" class="achievement-img">
+                </a>
+                
+                <p style="margin-top: 1rem; font-weight: 600; color: var(--text-dark);">
+                    Sertifikat / Bukti Prestasi
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer & Kontak -->
+    <footer>
+        <div class="footer-content">
+            <!-- Info Kontak -->
+            <div class="contact-info">
+                <h3>Hubungi Saya</h3>
+                <div class="info-item">
+                    <strong>Email:</strong>
+                    <span>fahresifathirreza@gmail.com</span>
+                </div>
+                <div class="info-item">
+                    <strong>No. Telp:</strong>
+                    <span>0895374244050</span>
+                </div>
+                <div class="info-item">
+                    <strong>Sekolah:</strong>
+                    <span>SMK PLUS PELITA NUSANTARA</span>
+                </div>
+            </div>
+
+            <!-- Formulir Pesan Cepat -->
+            <div class="contact-form">
+                <h3>Kirim Pesan Cepat</h3>
+                <form id="messageForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" required placeholder="Masukkan nama Anda">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Nomor Telepon</label>
+                        <input type="tel" id="phone" required placeholder="08xx-xxxx-xxxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="email@contoh.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan</label>
+                        <textarea id="message" rows="4" required placeholder="Tulis pesan Anda di sini..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Kirim Pesan</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2024 Portofolio By TIRR - Mochammad Fathir Reza Fahresi
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast">Pesan berhasil dikirim!</div>
+
+    <!-- JavaScript Script -->
+    <script>
+        // Fungsi untuk mengganti Tab
+        function openTab(evt, tabName) {
+            // 1. Sembunyikan semua konten tab
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            // 2. Hilangkan status active dari semua tombol navigasi
+            var navBtns = document.getElementsByClassName("nav-btn");
+            for (var i = 0; i < navBtns.length; i++) {
+                navBtns[i].classList.remove("active");
+            }
+
+            // 3. Tampilkan tab yang dipilih dan tambahkan status active ke tombol
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Fungsi simulasi pengiriman formulir
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Mencegah halaman refresh
+
+            // Ambil data (untuk simulasi, kita hanya akan menampilkan pesan sukses)
+            var name = document.getElementById("name").value;
+            var message = document.getElementById("message").value;
+
+            console.log("Mengirim pesan dari: " + name);
+            console.log("Isi pesan: " + message);
+
+            // Tampilkan notifikasi toast
+            var toast = document.getElementById("toast");
+            toast.className = "show";
+
+            // Sembunyikan toast setelah 3 detik
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+
+            // Reset formulir
+            document.getElementById("messageForm").reset();
+            
+            // Catatan: Karena ini halaman statis tanpa backend server, 
+            // pesan tidak benar-benar terkirim ke email.
+            // Di website nyata, Anda perlu layanan seperti Formspree atau PHP backend.
+        }
+    </script>
+</body>
+</html>
